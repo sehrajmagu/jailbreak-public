@@ -1,0 +1,4 @@
+-r ../backend/requirements.txt
+anthropic==0.125.0
+openai==2.48.0
+PyYAML==6.0.3

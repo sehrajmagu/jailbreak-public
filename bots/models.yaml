@@ -1,0 +1,68 @@
+# The six models, in Bot A to Bot F order. scripts/import_bots.py copies these
+# into the `models` table. Spending allowances are configured in LiteLLM.
+#
+# id                  What bot files use in `model`. Don't rename after importing.
+# provider            openai, anthropic or open (an open-source model).
+# display_name        Shown to teams. Must match ModelName in lib/types.ts.
+# api_model           The provider's real model ID. TODO means it isn't chosen yet:
+#                     the import warns and saves it as empty, and the playtest
+#                     refuses to run that model.
+# host                openai, anthropic, groq, or gateway-only bedrock/openai_compatible.
+# organiser_cost_*    Your cost per 1,000 tokens, for organiser reports only.
+#                     0 means the price hasn't been filled in yet.
+# enabled             false turns the model off.
+
+models:
+  - id: gpt-astra
+    provider: openai
+    display_name: Astra
+    api_model: TODO
+    host: openai
+    organiser_cost_per_1k_input: 0
+    organiser_cost_per_1k_output: 0
+    enabled: true
+
+  - id: gpt-terra
+    provider: openai
+    display_name: Terra
+    api_model: TODO
+    host: openai
+    organiser_cost_per_1k_input: 0
+    organiser_cost_per_1k_output: 0
+    enabled: true
+
+  - id: gpt-sol
+    provider: openai
+    display_name: Sol
+    api_model: TODO
+    host: openai
+    organiser_cost_per_1k_input: 0
+    organiser_cost_per_1k_output: 0
+    enabled: true
+
+  - id: gpt-luna
+    provider: openai
+    display_name: Luna
+    api_model: TODO
+    host: openai
+    organiser_cost_per_1k_input: 0
+    organiser_cost_per_1k_output: 0
+    enabled: true
+
+  - id: open-source-llm
+    provider: open
+    display_name: Open-source LLM
+    api_model: openai/gpt-oss-120b
+    host: groq
+    organiser_cost_per_1k_input: 0
+    organiser_cost_per_1k_output: 0
+    enabled: true
+
+  - id: claude-fable
+    provider: anthropic
+    display_name: Fable 5.1
+    api_model: claude-fable-5-1
+    host: anthropic
+    organiser_cost_per_1k_input: 0.01
+    organiser_cost_per_1k_output: 0.05
+    enabled: true

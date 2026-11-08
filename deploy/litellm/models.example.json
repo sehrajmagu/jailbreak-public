@@ -1,0 +1,28 @@
+{
+  "models": [
+    {
+      "alias": "challenge-openai",
+      "host": "openai",
+      "api_model": "REPLACE_WITH_REAL_OPENAI_MODEL_ID",
+      "provider": "openai",
+      "key_slot": 1,
+      "max_parallel_requests": 5
+    },
+    {
+      "alias": "challenge-claude",
+      "host": "anthropic",
+      "api_model": "REPLACE_WITH_REAL_CLAUDE_MODEL_ID",
+      "provider": "anthropic",
+      "key_slot": 2,
+      "max_parallel_requests": 5
+    },
+    {
+      "alias": "challenge-third",
+      "host": "groq",
+      "api_model": "REPLACE_WITH_REAL_THIRD_MODEL_ID",
+      "provider": "groq",
+      "key_slot": 3,
+      "max_parallel_requests": 5
+    }
+  ]
+}

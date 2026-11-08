@@ -1,0 +1,5 @@
+# Secrets, generated configuration and backups stay on the deployment machine.
+.env
+runtime/
+*.dump
+__pycache__/

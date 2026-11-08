@@ -1,0 +1,45 @@
+# Separate accounting DB: no changes to the application's Supabase instance.
+name: acm-litellm
+services:
+  proxy:
+    image: ${LITELLM_IMAGE:?Run setup.py init first}
+    restart: unless-stopped
+    command: ["--config", "/app/config.yaml", "--port", "4000", "--num_workers", "1"]
+    ports: ["127.0.0.1:4000:4000"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://litellm:${POSTGRES_PASSWORD}@db:5432/litellm
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+    volumes:
+      - ./runtime/config.json:/app/config.yaml:ro
+    depends_on:
+      db: {condition: service_healthy}
+      redis: {condition: service_healthy}
+  db:
+    image: postgres:16.6-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: litellm
+      POSTGRES_DB: litellm
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes: ["accounting:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U litellm -d litellm"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+  redis:
+    image: redis:7.4.2-alpine
+    restart: unless-stopped
+    # Internal Docker network only. Persistence retains budget counters on restart.
+    command: ["redis-server", "--appendonly", "yes", "--appendfsync", "always"]
+    volumes: ["counters:/data"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+volumes:
+  accounting:
+  counters:
